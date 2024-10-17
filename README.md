@@ -28,31 +28,67 @@ The application follows a service-oriented architecture and includes components 
 - RestTemplate for external API integration
 - JUnit 5 and Mockito for unit testing
 
+### Generating the Coverage Report
+
+To generate the test coverage report, follow these steps:
+
+1. **Run the tests**: Execute the following Maven command to run your unit tests and generate the coverage report:
+   ```bash
+   mvn clean test jacoco:report 
+2. **View The Reports**: After the report is generated, you can view it by opening the following file in a browser:
+
 ## Project Structure
 
 ```bash
-├── src
-│   ├── main
-│   │   ├── java
-│   │   │   ├── com.assignement.cedc
-│   │   │   │   ├── controller
-│   │   │   │   │   └── BillController.java       # Exposes API endpoint
-│   │   │   │   ├── dto
-│   │   │   │   │   └── BillRequest.java          # Bill request DTO
-│   │   │   │   │   └── BillResponse.java         # Bill response DTO
-│   │   │   │   ├── service
-│   │   │   │   │   └── BillService.java          # Interface for BillService
-│   │   │   │   │   └── BillServiceImpl.java      # Business logic for bill calculation
-│   │   │   │   │   └── DiscountService.java      # Interface for discount calculation
-│   │   │   │   │   └── CurrencyExchangeService.java # Interface for currency conversion
-│   │   │   │   ├── config
-│   │   │   │   │   └── SecurityConfig.java       # Security configuration (JWT Authentication)
-│   └── test                                      # Unit tests
-│       ├── java
-│       │   ├── com.assignement.cedc
-│       │   │   ├── service
-│       │   │   │   └── BillServiceImplTest.java  # Unit tests for BillServiceImpl
-│       │   │   ├── controller
-│       │   │   │   └── BillControllerTest.java   # Unit tests for BillController
++---src
+|   +---main
+|   |   +---java
+|   |   |   \---com
+|   |   |       \---assignement
+|   |   |           \---cedc
+|   |   |               |   CedcApplication.java
+|   |   |               |   
+|   |   |               +---config
+|   |   |               |       AppConfig.java
+|   |   |               |       
+|   |   |               +---constant
+|   |   |               |       UserTypeConstants.java
+|   |   |               |       
+|   |   |               +---controller
+|   |   |               |       BillController.java
+|   |   |               |       
+|   |   |               +---dto
+|   |   |               |       BillRequest.java
+|   |   |               |       BillResponse.java
+|   |   |               |       ExchangeRateResponse.java
+|   |   |               |       Item.java
+|   |   |               |       
+|   |   |               +---repository
+|   |   |               |   \---entity
+|   |   |               \---service
+|   |   |                       BillService.java
+|   |   |                       BillServiceImpl.java
+|   |   |                       CurrencyExchangeService.java
+|   |   |                       CurrencyExchangeServiceImpl.java
+|   |   |                       DiscountService.java
+|   |   |                       DiscountServiceImpl.java
+|   |   |                       
+|   |   \---resources
+|   |       |   application.properties
+|   |       |   
+|   |       +---static
+|   |       \---templates
+|   \---test
+|       \---java
+|           \---com
+|               \---assignement
+|                   \---cedc
+|                       |   CedcApplicationTests.java
+|                       |   
+|                       \---service
+|                               BillServiceImplTest.java
+|                               CurrencyExchangeServiceImplTest.java
+|                               DiscountServiceImplTest.java
+|                               
 ├── pom.xml                                        # Maven project file
 └── README.md
