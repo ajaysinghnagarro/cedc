@@ -80,7 +80,8 @@ curl --location 'http://localhost:8080/api/calculate' \
   "userType": "employee",
   "customerYears": 3,
   "originalCurrency": "USD",
-  "targetCurrency": "INR"
+  "targetCurrency": "INR",
+  "totalAmount":200
 }'
 ```
 ### Response Example 1
@@ -101,7 +102,8 @@ curl --location 'http://localhost:8080/api/calculate' \
   "userType": "employee",
   "customerYears": 3,
   "originalCurrency": "USD",
-  "targetCurrency": "EUR"
+  "targetCurrency": "EUR",
+  "totalAmount":300
 }'
 ```
 ### Response Example 2

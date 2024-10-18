@@ -2,10 +2,13 @@ package com.assignement.cedc.service;
 
 import com.assignement.cedc.controller.BillController;
 import com.assignement.cedc.dto.BillRequest;
+import com.assignement.cedc.dto.Item;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class BillServiceImpl implements BillService {
@@ -21,18 +24,23 @@ public class BillServiceImpl implements BillService {
     @Override
     public double calulatePaybleBill(BillRequest request) {
         logger.info("Started Calculating payable bill ");
-        double paybleAmountInOriginalCurrency = discountService.applyDiscounts(request);
-        logger.info("Payable amount after applying discount in original currency {} {}",paybleAmountInOriginalCurrency,request.getOriginalCurrency());
-
-        double payableAmountInTargetCurrency = currencyExchangeService.convertCurrency(
-                paybleAmountInOriginalCurrency,
-                request.getOriginalCurrency(),
-                request.getTargetCurrency()
-        );
-        logger.info("Payable amount after conversion in target currency {} {}",payableAmountInTargetCurrency,request.getTargetCurrency());
-
+        convertBillIntoTargetCurrencyFormat(request);
+        double payableAmountInTargetCurrency = discountService.applyDiscounts(request);
+        logger.info("Payable amount after applying discount in Target currency {} {}",payableAmountInTargetCurrency,request.getTargetCurrency());
         return payableAmountInTargetCurrency;
     }
+
+    public void convertBillIntoTargetCurrencyFormat(BillRequest request) {
+        logger.debug("Started converting bill amounts into target currency for the request {}", request);
+        double exchangeRate = currencyExchangeService.getExchangeRate(request.getOriginalCurrency(), request.getTargetCurrency());
+        logger.debug("Converting all bill amounts into target currency with exchange rate {}", exchangeRate);
+        List<Item> items = request.getItems();
+        items.forEach(item -> item.setPrice(item.getPrice() * exchangeRate));
+        request.setTotalAmount(request.getTotalAmount() * exchangeRate);
+        logger.debug("End converting bill amounts into target currency total amount: {}", request.getTotalAmount());
+
+    }
+
 
 
 }

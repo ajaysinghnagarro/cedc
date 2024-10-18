@@ -26,6 +26,7 @@ public class DiscountServiceImplTest {
                 new Item("Laptop", "electronics", 1000)
         );
         BillRequest request = new BillRequest(items, "employee", 3, "USD", "EUR");
+        request.setTotalAmount(1100);
         double finalAmount = discountService.applyDiscounts(request);
         // Employee discount: 30% on non-grocery items (Laptop)
         double expectedAmount = 100 + 1000 - (0.30 * 1000) - (((100 + 1000)/100.0)* 5);
@@ -40,7 +41,7 @@ public class DiscountServiceImplTest {
                 new Item("TV", "electronics", 500)
         );
         BillRequest request = new BillRequest(items, "affiliate", 1, "USD", "EUR");
-
+        request.setTotalAmount(600);
         double finalAmount = discountService.applyDiscounts(request);
 
         double expectedAmount = 100 + 500 - (0.10 * 500) - (((100 + 500)/100.0)* 5); // $500 * 10% = $50, $5 flat discount
@@ -55,8 +56,7 @@ public class DiscountServiceImplTest {
                 new Item("Laptop", "electronics", 1000)
         );
         BillRequest request = new BillRequest(items, "customer", 3, "USD", "EUR");
-
-        // Act
+        request.setTotalAmount(1100);
         double finalAmount = discountService.applyDiscounts(request);
         double expectedAmount = 100 + 1000 - (0.05 * 1000) - (((100 + 1000)/100.0)* 5);
         assertEquals(expectedAmount, finalAmount, 0.01);
@@ -69,6 +69,7 @@ public class DiscountServiceImplTest {
                 new Item("TV", "electronics", 500)
         );
         BillRequest request = new BillRequest(items, "customer", 1, "USD", "EUR");
+        request.setTotalAmount(600);
         double finalAmount = discountService.applyDiscounts(request);
         double expectedAmount = 100 + 500 - (((100 + 500)/100.0)* 5);
         assertEquals(expectedAmount, finalAmount, 0.01);
@@ -82,7 +83,7 @@ public class DiscountServiceImplTest {
                 new Item("Banana", "groceries", 50)
         );
         BillRequest request = new BillRequest(items, "employee", 5, "USD", "EUR");
-
+        request.setTotalAmount(150);
         double finalAmount = discountService.applyDiscounts(request);
         double expectedAmount = 100 + 50 - (((100 + 50)/100.0)* 5); // Flat discount for $5 every $100
         assertEquals(expectedAmount, finalAmount);

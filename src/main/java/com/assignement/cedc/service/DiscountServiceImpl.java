@@ -23,9 +23,7 @@ public class DiscountServiceImpl implements DiscountService {
 
         // Sum total amount
         List<Item> items = request.getItems();
-        double totalAmount = items.stream()
-                .mapToDouble(Item::getPrice)
-                .sum();
+        double totalAmount = request.getTotalAmount();
         logger.info("Bill total amount before applying discount {}",totalAmount);
         // Sum amount for non-grocery items
         double nonGroceryAmount = items.stream()
